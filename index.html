@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <title>Add Data to Firestore</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        ul {
+            width: 50%;
+            padding-inline-start: 0px;
+        }
+
+        li {
+            background-color: darkseagreen;
+            color: white;
+            font-weight: bold;
+            margin: 2vh;
+            margin-left: 0px;
+            padding: 1vh;
+            line-break: anywhere;
+        }
+
+        .error {
+            background-color: salmon;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Add Data to Firestore</h1>
+    <p>
+        <label for="config">Add CONFIG json </label><br>
+        <input type="file" id="config">
+    </p>
+    <p>
+        <label for="data">Add DATA json </label><br>
+        <input type="file" id="data">
+    </p>
+
+    <p>
+        <input type="checkbox" id="local" name="local" value="UseLocalhost" checked>
+        <label for="local">Use emulated Firestore</label>
+    </p>
+    <button id="add">Start importing data</button>
+    <hr>
+    <h3>Protocol:</h3>
+    <ul id="status"></ul>
+    <script src="./index.js"></script>
+</body>
+
+</html>

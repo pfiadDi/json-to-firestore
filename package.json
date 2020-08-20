@@ -1,0 +1,29 @@
+{
+  "name": "json-to-firestore",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "serve": "parcel index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pfiadDi/json-to-firestore.git"
+  },
+  "author": "Thomas Urban",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pfiadDi/json-to-firestore/issues"
+  },
+  "homepage": "https://github.com/pfiadDi/json-to-firestore#readme",
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "firebase": "^7.17.2",
+    "parcel": "^1.12.4"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.1.1"
+  }
+}

@@ -1,0 +1,6 @@
+{
+    "apiKey": "apiKey",
+    "databaseURL": "https://url.firebaseio.com",
+    "projectId": "projectName",
+    "appId": "id"
+}

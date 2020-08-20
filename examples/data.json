@@ -1,0 +1,50 @@
+{
+    "collection": [
+        {
+            "name": "customers",
+            "docs": [
+                {
+                    "name": "",
+                    "data": {
+                        "companyName": "Large Corp",
+                        "startDate": "2020-08-21",
+                        "endDate": "2020-08-31"
+                    },
+                    "collection": [
+                        {
+                            "name": "invoices",
+                            "docs": [
+                                {
+                                    "name": "",
+                                    "data": {
+                                        "amount": 1000,
+                                        "product": "Productname"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "contacts",
+                            "docs": [
+                                {
+                                    "name": "",
+                                    "data": {
+                                        "name": "John Doe",
+                                        "email": "johns@mail.com"
+                                    }
+                                },
+                                {
+                                    "name": "AndreaAsDocName",
+                                    "data": {
+                                        "name": "Andrea Hundsville",
+                                        "email": "andrea@mail.com"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
