@@ -19,7 +19,7 @@
   "homepage": "https://github.com/pfiadDi/json-to-firestore#readme",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "firebase": "^7.17.2",
+    "firebase": "^7.24.0",
     "parcel": "^1.12.4"
   },
   "devDependencies": {
