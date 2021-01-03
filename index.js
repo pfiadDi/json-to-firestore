@@ -1,6 +1,6 @@
 import "babel-polyfill";
-const firebase = require("firebase/app");
-require("firebase/firestore");
+import firebase from "firebase/app";
+import "firebase/firestore";
 
 const addData = require("./resources/js/addData");
 const logger = require("./resources/js/log");
