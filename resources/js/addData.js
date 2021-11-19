@@ -79,7 +79,7 @@ module.exports = {
                 newDoc = db.collection(path).doc(docName);
             }
 
-            newDoc.set(data).then(() => {
+            newDoc.set(data,{ merge: true }).then(() => {
                 return resolve(status.returnStatus("success", path + "/" + newDoc.id));
             }).catch(err => {
                 return resolve(status.returnStatus("error", err));
