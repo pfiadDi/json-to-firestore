@@ -1,0 +1,18 @@
+apiDefinitions:
+  main: schema.yaml
+lint:
+  extends:
+    - recommended
+  rules:
+    tag-description: off
+    operation-summary: error
+    no-unresolved-refs: error
+    no-unused-components: off
+    operation-2xx-response: error
+    operation-operationId: off
+    operation-singular-tag: error
+    no-enum-type-mismatch: error
+    no-identical-paths: error
+    no-ambiguous-paths: error
+referenceDocs:
+  defaultSampleLanguage: "elm"
