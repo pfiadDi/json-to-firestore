@@ -1,0 +1,93 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: JSON to Firebase
+  description: "This is a a pseudo api definition, to maintain a central schema / type definition for the project."
+
+servers:
+  - url: https://example.server.io
+    description: description server text.
+
+components:
+  schemas:
+    TopLevel:
+      description: "The top level of the json on item collection with an array of Collection"
+      type: object
+      required:
+        - collection
+      properties:
+        collection:
+          type: array
+          items:
+            $ref: "#/components/schemas/Collection"
+    Collection:
+      type: object
+      required:
+        - name
+        - docs
+      properties:
+        name:
+          type: string
+          description: "the name of the collection. must be a valid collection name and not empty."
+          example: "collectionName"
+        docs:
+          type: array
+          items:
+            $ref: "#/components/schemas/Document"
+          description: An array of documents, to be added to this collection
+    Document:
+      type: object
+      required:
+        - name
+        - data
+        - collection
+      properties:
+        name:
+          type: string
+          description: 'the name of document, when it is an empty string (e.g. "") Firestore will choose an random doc name'
+          example: "documentName"
+        data:
+          type: object
+          description: the actuall data of the document. note, that field functions like server time or so are not supported yet, as well as the date field itself.
+        collection:
+          type: array
+          items:
+            $ref: "#/components/schemas/Collection"
+          description: an array of sub collections for this document
+paths:
+  /toplevel:
+    get:
+      tags:
+        - fake
+      summary: The top level of the json
+      responses:
+        "200":
+          description: "Array of collections"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TopLevel"
+  /document:
+    get:
+      tags:
+        - fake
+      summary: The document object
+      responses:
+        "200":
+          description: "Firestore Document"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+  /collection:
+    get:
+      tags:
+        - fake
+      summary: The collection object
+      responses:
+        "200":
+          description: "Firestore Document"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Collection"
