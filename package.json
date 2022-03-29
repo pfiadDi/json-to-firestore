@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "serve": "parcel index.html"
+    "ts-test": "mocha -r ts-node/register src/**/*.test.ts",
+    "serve": "parcel index.html",
+    "generate": "npx openapi-typescript schema.yaml --output src/model/schema.ts"
   },
   "repository": {
     "type": "git",
@@ -19,7 +21,8 @@
   "homepage": "https://github.com/pfiadDi/json-to-firestore#readme",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "firebase": "^9.6.10"
+    "firebase": "^9.6.10",
+    "ts-json-decode": "^0.5.1"
   },
   "devDependencies": {
     "@types/chai": "^4.3.0",

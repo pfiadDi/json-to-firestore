@@ -50,6 +50,7 @@ components:
           type: object
           description: the actuall data of the document. note, that field functions like server time or so are not supported yet, as well as the date field itself.
         collection:
+          nullable: true
           type: array
           items:
             $ref: "#/components/schemas/Collection"
