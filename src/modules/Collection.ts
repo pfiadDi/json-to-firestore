@@ -9,13 +9,15 @@ const decodeDocs: Decoder<any> = value => {
 }
 export const decodeCollection : Decoder<Collection> = object({
     name:str,
-    docs:array(decodeDocs) //only check for the presence of an array of objects to avoid recursive hell. if a doc is valid is checked when a doc is checked
+    docs:array(decodeDocs) //only check for the presence of an array of objects to avoid recursive hell. if a doc is valid is checked in the next step
 })
 
 
-export const checkCollection = (maybeDocument : unknown) : Collection => {
+export const checkCollection = (maybeCollection : unknown) : Collection => {
     try {
-        return decodeValue(decodeCollection)(maybeDocument)
+        const collection = decodeValue(decodeCollection)(maybeCollection);
+        if (collection.name.includes('/')) throw new Error('A collection name must not contain a `/`');
+        return collection;
     } catch (error) {
         throw error
     }

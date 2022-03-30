@@ -44,6 +44,14 @@ export interface paths {
 
 export interface components {
   schemas: {
+    /** @description A object to count the successfully written docs and the the failed docs / collections. */
+    Summary: {
+      /** @example 23 */
+      docs: number;
+      /** @example 2 */
+      docErrors: number;
+      collectionErrors: number;
+    };
     /** @description The top level of the json on item collection with an array of Collection */
     TopLevel: {
       collection: components["schemas"]["Collection"][];

@@ -10,6 +10,23 @@ servers:
 
 components:
   schemas:
+    Summary:
+      description: A object to count the successfully written docs and the the failed docs / collections.
+      type: object
+      required:
+        - docs
+        - docErrors
+        - collectionErrors
+      properties:
+        docs:
+          type: integer
+          example: 23
+        docErrors:
+          type: integer
+          example: 2
+        collectionErrors:
+          type: integer
+          example: 0
     TopLevel:
       description: "The top level of the json on item collection with an array of Collection"
       type: object
