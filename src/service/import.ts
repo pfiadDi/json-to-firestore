@@ -23,11 +23,6 @@ const parse = async (collections : Collection[], path : string, db : FirestoreWe
     let a = 1;
     for (const collection of collections) {
         try {
-            
-        }
-    }
-    collections.forEach(async collection => {
-        try {
             checkCollection(collection)
             path = createNewCollectionPath(path,collection.name)
             const docOperation = collection.docs.map(doc => {
@@ -42,17 +37,15 @@ const parse = async (collections : Collection[], path : string, db : FirestoreWe
             
             
             const docResults = await Promise.allSettled(docOperation)
-            console.log("I am here")
             docResults.forEach(doc => {
                 if(doc.status === "fulfilled") {
-                    //logger(`success, doc: ${doc.value}`)
+                    logger(`success, doc: ${doc.value}`)
                     counter.addDoc()
                 } else {
-                    //logger(doc.reason)
+                    logger(doc.reason)
                     counter.addDocError()
                 }
             })
-            
           
 
         } catch (error) {
@@ -61,7 +54,8 @@ const parse = async (collections : Collection[], path : string, db : FirestoreWe
             counter.addCollectionError()
             
         }
-    })
+    }
+
     console.log(`this is a: ${a}`)
     return counter.values
 } 
