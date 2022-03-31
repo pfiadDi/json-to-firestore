@@ -1,6 +1,6 @@
 import {  Firestore, DocumentReference } from 'firebase-admin/firestore'
 import { Document } from '../modules/Document';
-import { Logger } from '../modules/Logger';
+import { docError } from '../modules/Logger';
 
 
 export const writeDocAdmin = async (document : Document,path:string,db:Firestore) : Promise<string> => {
@@ -15,6 +15,6 @@ export const writeDocAdmin = async (document : Document,path:string,db:Firestore
         return newDoc.path
     }catch(error) {
         let error_ = error as Error;
-        return Promise.reject(error_.message)
+        return Promise.reject(docError(document,error_.message,path))
     }
 }

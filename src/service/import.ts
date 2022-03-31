@@ -1,6 +1,6 @@
 import { Firestore as FirestoreWeb } from "firebase/firestore"
 import {  Firestore as FirestoreAdmin } from 'firebase-admin/firestore'
-import { Logger } from "../modules/Logger"
+import { docError, Logger } from "../modules/Logger"
 import {  checkTopLevel } from "../modules/TopLevel"
 import { checkCollection, Collection } from "../modules/Collection"
 import {Counter, Summary } from "../modules/Counter"
@@ -31,7 +31,7 @@ const parse = async (collections : Collection[], path : string, db : FirestoreWe
                     return writeDoc(doc, path, db,firestoreType);
                 } catch (error) {
                     let error_ = error as Error
-                    return Promise.reject(`Document error at path { ${path} }: ${error_.message}. Failed object: ${JSON.stringify(doc)}`)
+                    return Promise.reject(docError(doc,error_.message,path))
                 }
             })
             

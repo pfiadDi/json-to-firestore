@@ -1,7 +1,7 @@
 import { FirebaseApp } from "firebase/app";
 import {  Firestore, collection, doc, setDoc} from "firebase/firestore"
 import { Document } from "../modules/Document";
-import { Logger } from "../modules/Logger";
+import { docError, Logger } from "../modules/Logger";
 
 export const writeDocWeb = async (document : Document,path:string,db:Firestore) : Promise<string> => {
     try {
@@ -9,6 +9,7 @@ export const writeDocWeb = async (document : Document,path:string,db:Firestore) 
         await setDoc(docRef,document.data,{merge:true})
         return docRef.path
     }catch(error) {
-        throw error
+        let error_ = error as Error;
+        return Promise.reject(docError(document,error_.message,path))
     }
 }
