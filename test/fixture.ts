@@ -25,6 +25,29 @@ export const correctDoc : unknown = {
          ]
     }
 
+export const correctDocThrow : unknown = {
+name: "throw",
+data: {
+    companyName: "Large Corp",
+    startDate: "2020-08-21",
+    endDate: "2020-08-31"
+},
+collection: [
+    {
+        name: "invoices",
+        docs: [
+            {
+                name: "",
+                data: {
+                    "amount": 1000,
+                    "product": "Productname"
+                },
+                collection: null
+            },
+        ]
+    }
+        ]
+}
 export const correctDocName : unknown = {
     name: "aname",
     data: {
@@ -58,13 +81,13 @@ export const correctTopLevel : unknown = {
             name: "invoices",
             docs: [
                 correctDocName
-                , correctDoc
+                , incorrectDoc
             ]
         },
         {
             name: "secondCollection",
             docs: [
-                correctDoc
+                correctDocThrow
                 , correctDoc
             ]
         }

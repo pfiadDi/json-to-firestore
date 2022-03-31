@@ -2,7 +2,7 @@ import {  Firestore, DocumentReference } from 'firebase-admin/firestore'
 import { Logger } from '../modules/Logger';
 
 
-export const writeDocAdmin = async (data:object,docName:string,path:string,db:Firestore,logger : Logger) : Promise<string> => {
+export const writeDocAdmin = async (data:object,docName:string,path:string,db:Firestore) : Promise<string> => {
     try {
         let newDoc : DocumentReference;
         if (docName === "") {
@@ -13,6 +13,7 @@ export const writeDocAdmin = async (data:object,docName:string,path:string,db:Fi
         await newDoc.set(data,{ merge: true })
         return newDoc.path
     }catch(error) {
-        throw error
+        let error_ = error as Error;
+        return Promise.reject(error_.message)
     }
 }

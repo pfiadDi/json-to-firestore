@@ -20,26 +20,28 @@ export const start = async (maybeData : unknown, db : FirestoreWeb|FirestoreAdmi
 } 
 
 const parse = async (collections : Collection[], path : string, db : FirestoreWeb|FirestoreAdmin, counter : Counter,logger : Logger,firestoreType : FirestoreType ) : Promise<Summary> => {
-    collections.forEach(collection => {
+    collections.forEach(async collection => {
         try {
             checkCollection(collection)
             path = createNewCollectionPath(path,collection.name)
             
             const docOperation = collection.docs.map(doc => {
-                
-            })
-            //parse docs of collection
-            collection.docs.forEach(async doc => {
                 try {
                     checkDocument(doc)
-                    let pathNewDoc = await writeDoc(doc.data, doc.name, path, db,firestoreType,logger);
-                    
-
+                    return writeDoc(doc.data, doc.name, path, db,firestoreType);
                 } catch (error) {
                     let error_ = error as Error
                     logger(`Document error at path { ${path} }: ${error_.message}. Failed object: ${JSON.stringify(doc)}`)
+                    return Promise.reject(error_)
                 }
             })
+
+            const docResults = await Promise.allSettled(docOperation)
+            docResults.forEach(doc => {
+                console.log(`results: ${JSON.stringify(doc)}`)
+            })
+
+          
 
         } catch (error) {
             let error_ = error as Error
@@ -50,11 +52,11 @@ const parse = async (collections : Collection[], path : string, db : FirestoreWe
     return counter.values
 } 
 
-export const writeDoc = async (data : object, docName : string, path : string, db : FirestoreWeb|FirestoreAdmin, firestoreType : FirestoreType, logger : Logger) : Promise<string> => {
+export const writeDoc = async (data : object, docName : string, path : string, db : FirestoreWeb|FirestoreAdmin, firestoreType : FirestoreType) : Promise<string> => {
     if(firestoreType === "web") {
-        return await writeDocWeb(data,docName,path,db as FirestoreWeb,logger)
+        return await writeDocWeb(data,docName,path,db as FirestoreWeb)
     } else {
-        return await writeDocAdmin(data,docName,path,db as FirestoreAdmin,logger)
+        return await writeDocAdmin(data,docName,path,db as FirestoreAdmin)
     }
 }
 
