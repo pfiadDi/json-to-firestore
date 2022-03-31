@@ -81,7 +81,7 @@ export const correctTopLevel : unknown = {
             name: "invoices",
             docs: [
                 correctDocName
-                , incorrectDoc
+            
             ]
         },
         {

@@ -4,7 +4,7 @@ import { Logger } from "../modules/Logger"
 import {  checkTopLevel } from "../modules/TopLevel"
 import { checkCollection, Collection } from "../modules/Collection"
 import {Counter, Summary } from "../modules/Counter"
-import { checkDocument } from "../modules/Document"
+import { checkDocument, Document } from "../modules/Document"
 import { writeDocWeb } from "./firestore.web"
 import { writeDocAdmin } from "./firestore.admin"
 
@@ -28,19 +28,22 @@ const parse = async (collections : Collection[], path : string, db : FirestoreWe
             const docOperation = collection.docs.map(doc => {
                 try {
                     checkDocument(doc)
-                    return writeDoc(doc.data, doc.name, path, db,firestoreType);
+                    return writeDoc(doc, path, db,firestoreType);
                 } catch (error) {
                     let error_ = error as Error
-                    logger(`Document error at path { ${path} }: ${error_.message}. Failed object: ${JSON.stringify(doc)}`)
-                    return Promise.reject(error_)
+                    return Promise.reject(`Document error at path { ${path} }: ${error_.message}. Failed object: ${JSON.stringify(doc)}`)
                 }
             })
-
+            
             const docResults = await Promise.allSettled(docOperation)
             docResults.forEach(doc => {
-                console.log(`results: ${JSON.stringify(doc)}`)
+                if(doc.status === "fulfilled") {
+                    logger(`success, doc: ${doc.value}`)
+                } else {
+                    logger(doc.reason)
+                }
             })
-
+            
           
 
         } catch (error) {
@@ -52,11 +55,11 @@ const parse = async (collections : Collection[], path : string, db : FirestoreWe
     return counter.values
 } 
 
-export const writeDoc = async (data : object, docName : string, path : string, db : FirestoreWeb|FirestoreAdmin, firestoreType : FirestoreType) : Promise<string> => {
+export const writeDoc = async (document : Document, path : string, db : FirestoreWeb|FirestoreAdmin, firestoreType : FirestoreType) : Promise<string> => {
     if(firestoreType === "web") {
-        return await writeDocWeb(data,docName,path,db as FirestoreWeb)
+        return await writeDocWeb(document,path,db as FirestoreWeb)
     } else {
-        return await writeDocAdmin(data,docName,path,db as FirestoreAdmin)
+        return await writeDocAdmin(document,path,db as FirestoreAdmin)
     }
 }
 
