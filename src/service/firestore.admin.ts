@@ -1,7 +1,8 @@
 import {  Firestore, DocumentReference } from 'firebase-admin/firestore'
+import { Logger } from '../modules/Logger';
 
 
-export const writeDocWeb = async (data:object,docName:string,path:string,db:Firestore) : Promise<string> => {
+export const writeDocAdmin = async (data:object,docName:string,path:string,db:Firestore,logger : Logger) : Promise<string> => {
     try {
         let newDoc : DocumentReference;
         if (docName === "") {

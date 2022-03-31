@@ -3,19 +3,27 @@ import * as chai from 'chai'
 const expect = chai.expect
 import chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised)
-import { correctTopLevel, oneIncorrectCollection,oneIncorrectDocument,summary } from "./fixture"
+import { correctTopLevel, oneIncorrectCollection,oneIncorrectDocument,summary, FirestoreMock } from "./fixture"
 import { createNewCollectionPath, start } from "../src/service/import"
-import { Firestore } from 'firebase/firestore';
 import { console_, Logger, testLogger } from '../src/modules/Logger';
 import * as fs from 'fs/promises';
+import {  Firestore } from 'firebase-admin/firestore'
+
 
 
 describe('A possible TopLevel is parsed and imported', async () => {
-    it('start - returns success when a correct data is passed',()=> {
-        //return expect(start(correctTopLevel,"", {} as Firestore, {} as Logger)).eventually.to.be.deep.equal(create("success","temp to compile"))
-        expect(start(correctTopLevel,{} as Firestore, console_)).to.be.deep.equal(summary(0,0,0))
+    it("collection is a function",()=>{
+        expect(new FirestoreMock().collection("hallo").path).to.be.equal("hallo")
     })
 
+    it('start - returns success when a correct data is passed',()=> {
+        //return expect(start(correctTopLevel,"", {} as Firestore, {} as Logger)).eventually.to.be.deep.equal(create("success","temp to compile"))
+        const db = new FirestoreMock()
+        
+        // @ts-ignore:next-line
+        return expect(start(correctTopLevel,db as Firestore, console_,"admin")).eventually.to.be.deep.equal(summary(0,0,0))
+    })
+/*
     it('A incorrect TopLevel throws',()=>{
         expect(start.bind(start,{},{} as Firestore, console_)).to.throw()
     })
@@ -33,7 +41,7 @@ describe('A possible TopLevel is parsed and imported', async () => {
         const loggedMsg = await fs.readFile("./test/documentError.txt","utf8")
         expect(loggedMsg).to.include("Document error at path { ")
     })
-
+*/
 });
 
 describe('Create collection paths',()=>{

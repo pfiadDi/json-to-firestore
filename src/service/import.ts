@@ -1,34 +1,39 @@
-import { Firestore } from "firebase/firestore"
+import { Firestore as FirestoreWeb } from "firebase/firestore"
+import {  Firestore as FirestoreAdmin } from 'firebase-admin/firestore'
 import { Logger } from "../modules/Logger"
 import {  checkTopLevel } from "../modules/TopLevel"
 import { checkCollection, Collection } from "../modules/Collection"
 import {Counter, Summary } from "../modules/Counter"
 import { checkDocument } from "../modules/Document"
 import { writeDocWeb } from "./firestore.web"
+import { writeDocAdmin } from "./firestore.admin"
 
+type FirestoreType = "web"|"admin"
 
-export const start =  (maybeData : unknown, db : Firestore, logger : Logger) : Summary => {
+export const start = async (maybeData : unknown, db : FirestoreWeb|FirestoreAdmin, logger : Logger,firestoreType : FirestoreType) : Promise<Summary> => {
     try {
         const data = checkTopLevel(maybeData);
-        return parse(data.collection,"",{} as Firestore,new Counter(),logger)
+        return await parse(data.collection,"",db,new Counter(),logger, firestoreType)
     } catch(error) {
         throw error
     }
 } 
 
-const parse = (collections : Collection[], path : string, db : Firestore, counter : Counter,logger : Logger) : Summary => {
+const parse = async (collections : Collection[], path : string, db : FirestoreWeb|FirestoreAdmin, counter : Counter,logger : Logger,firestoreType : FirestoreType ) : Promise<Summary> => {
     collections.forEach(collection => {
         try {
             checkCollection(collection)
             path = createNewCollectionPath(path,collection.name)
             
+            const docOperation = collection.docs.map(doc => {
+                
+            })
             //parse docs of collection
-            collection.docs.forEach(doc => {
+            collection.docs.forEach(async doc => {
                 try {
                     checkDocument(doc)
+                    let pathNewDoc = await writeDoc(doc.data, doc.name, path, db,firestoreType,logger);
                     
-                    let pathNewDoc = writeDoc(doc.data, doc.name, path, db);
-
 
                 } catch (error) {
                     let error_ = error as Error
@@ -45,11 +50,11 @@ const parse = (collections : Collection[], path : string, db : Firestore, counte
     return counter.values
 } 
 
-export const writeDoc = async (data : object, docName : string, path : string, db : Firestore, firestoreType : "web"|"admin") : Promise<string> => {
+export const writeDoc = async (data : object, docName : string, path : string, db : FirestoreWeb|FirestoreAdmin, firestoreType : FirestoreType, logger : Logger) : Promise<string> => {
     if(firestoreType === "web") {
-        return await writeDocWeb(data,docName,path,db)
+        return await writeDocWeb(data,docName,path,db as FirestoreWeb,logger)
     } else {
-        return await writeDocAdmin()
+        return await writeDocAdmin(data,docName,path,db as FirestoreAdmin,logger)
     }
 }
 
