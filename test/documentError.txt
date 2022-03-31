@@ -1,1 +1,1 @@
-Document error at path { invoices }: Failed object: {"name":""}
+Document error at path - invoices -, passed data: - {"name":""}. That happend: Expected Expected an object at field "data" but got got anything elsecollection":[{"name":"invoices","docs":[{"name":"","data":{"amount":1000,"product":"Productname"},"collection":null}]}]}. That happend: db.collection is not a function

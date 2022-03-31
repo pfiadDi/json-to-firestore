@@ -29,21 +29,19 @@ describe('A possible TopLevel is parsed and imported', async () => {
         return expect(start({},db as Firestore, console_,"admin")).eventually.to.be.rejectedWith("Expected array")
         
     })
-/*
-    it('A TopLevel with one correct and one incorect Collection returns an Counter with one error',()=>{
-        expect(start(oneIncorrectCollection,{} as Firestore, console_)).to.be.deep.equal(summary(0,0,1))
-    })
+
+
     it('A collection error is logged', async ()=>{
-        start(oneIncorrectCollection,{} as Firestore, testLogger)
+        start(oneIncorrectCollection,{} as Firestore, testLogger,"admin")
         const loggedMsg = await fs.readFile("./test/collectionError.txt","utf8")
         expect(loggedMsg).to.include("Collection error at path { ")
     })
     it('A document error is logged', async ()=>{
-        start(oneIncorrectDocument,{} as Firestore, testLogger)
+        start(oneIncorrectDocument,{} as Firestore, testLogger,"admin")
         const loggedMsg = await fs.readFile("./test/documentError.txt","utf8")
-        expect(loggedMsg).to.include("Document error at path { ")
+        expect(loggedMsg).to.include("Document error at path - ")
     })
-*/
+
 });
 
 describe('Create collection paths',()=>{

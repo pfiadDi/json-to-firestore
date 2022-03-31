@@ -1,7 +1,7 @@
 import { resolve } from "path"
 import { Summary } from "../src/modules/Counter"
 
-export const correctDoc : unknown = {
+export const docNoName : unknown = {
     name: "",
     data: {
         companyName: "Large Corp",
@@ -76,6 +76,7 @@ export const incorrectDoc : unknown = {
     }
 
 export const correctTopLevel : unknown = {
+    // results in two document writes, one unsuccessfully write
     collection: [
         {
             name: "invoices",
@@ -88,7 +89,7 @@ export const correctTopLevel : unknown = {
             name: "secondCollection",
             docs: [
                 correctDocThrow
-                , correctDoc
+                , docNoName
             ]
         }
     ]
@@ -98,7 +99,7 @@ export const oneIncorrectDocument : unknown = {
         {
             name: "invoices",
             docs: [
-                correctDoc
+                docNoName
                 , incorrectDoc
             ]
         }
@@ -109,15 +110,15 @@ export const oneIncorrectCollection : unknown = {
                 {
             name: "second/Collection",
             docs: [
-                correctDoc
-                , correctDoc
+                docNoName
+                , docNoName
             ]
         },
         {
             name: "invoices",
             docs: [
-                correctDoc
-                , correctDoc
+                docNoName
+                , docNoName
             ]
         }
 
@@ -155,4 +156,5 @@ export class FirestoreMock {
     }
   
 }
+
 

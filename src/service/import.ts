@@ -84,3 +84,4 @@ export const createNewCollectionPath = (currentPath : string, newSegment : strin
             }
         }
     }
+
