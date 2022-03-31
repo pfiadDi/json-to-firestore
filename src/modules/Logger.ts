@@ -15,6 +15,13 @@ export const testLogger : Logger = (msg : string) => {
     if (msg.includes("Collection error")) fileName = "collectionError.txt"
     if (msg.includes("Document error")) fileName = "documentError.txt"
     fs.writeFile(`./test/${fileName}`,msg,()=> {
-        
+
     })
+}
+
+export const docError = (document : any, errorMsg : string, path : string) : string => {
+    return `Document error at path - ${path} -, passed data: - ${JSON.stringify(document)}. That happend: ${errorMsg}`
+}
+export const collectionError = (collection : any, errorMsg : string, path : string) : string => {
+    return `Collection error at or near path - ${path} -, passed data: - ${JSON.stringify(collection)}. That happend: ${errorMsg}`
 }
