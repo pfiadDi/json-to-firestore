@@ -9,6 +9,7 @@ import { console_, Logger, testLogger } from '../src/modules/Logger';
 import * as fs from 'fs/promises';
 import {  Firestore } from 'firebase-admin/firestore'
 
+const db = new FirestoreMock()
 
 
 describe('A possible TopLevel is parsed and imported', async () => {
@@ -18,16 +19,17 @@ describe('A possible TopLevel is parsed and imported', async () => {
 
     it('start - returns success when a correct data is passed',()=> {
         //return expect(start(correctTopLevel,"", {} as Firestore, {} as Logger)).eventually.to.be.deep.equal(create("success","temp to compile"))
-        const db = new FirestoreMock()
         
         // @ts-ignore:next-line
         return expect(start(correctTopLevel,db as Firestore, console_,"admin")).eventually.to.be.deep.equal(summary(0,0,0))
     })
-/*
-    it('A incorrect TopLevel throws',()=>{
-        expect(start.bind(start,{},{} as Firestore, console_)).to.throw()
-    })
 
+    it('A incorrect TopLevel throws',()=>{
+        // @ts-ignore:next-line
+        return expect(start({},db as Firestore, console_,"admin")).eventually.to.be.rejectedWith("Expected array")
+        
+    })
+/*
     it('A TopLevel with one correct and one incorect Collection returns an Counter with one error',()=>{
         expect(start(oneIncorrectCollection,{} as Firestore, console_)).to.be.deep.equal(summary(0,0,1))
     })

@@ -75,7 +75,7 @@ module.exports = {
             let newDoc;
             if (docName === "" || docName === undefined) {
                 newDoc = db.collection(path).doc();
-            } else {
+            } else {    
                 newDoc = db.collection(path).doc(docName);
             }
 

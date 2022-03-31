@@ -15,7 +15,7 @@ export const start = async (maybeData : unknown, db : FirestoreWeb|FirestoreAdmi
         const data = checkTopLevel(maybeData);
         return await parse(data.collection,"",db,new Counter(),logger, firestoreType)
     } catch(error) {
-        throw error
+        return Promise.reject(error)
     }
 } 
 
