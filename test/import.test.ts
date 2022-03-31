@@ -21,9 +21,9 @@ describe('A possible TopLevel is parsed and imported', async () => {
         //return expect(start(correctTopLevel,"", {} as Firestore, {} as Logger)).eventually.to.be.deep.equal(create("success","temp to compile"))
         
         // @ts-ignore:next-line
-        return expect(start(correctTopLevel,db as Firestore, console_,"admin")).eventually.to.be.deep.equal(summary(0,0,0))
+        return expect(start(correctTopLevel,db as Firestore, console_,"admin")).eventually.to.be.deep.equal(summary(2,1,0))
     })
-
+/*
     it('A incorrect TopLevel throws',()=>{
         // @ts-ignore:next-line
         return expect(start({},db as Firestore, console_,"admin")).eventually.to.be.rejectedWith("Expected array")
@@ -58,7 +58,7 @@ describe('Create collection paths',()=>{
         expect(createNewCollectionPath("collName/docId","newCollName")).to.be.equal("collName/docId/newCollName")
     })
 
-
+*/
 
 });
 

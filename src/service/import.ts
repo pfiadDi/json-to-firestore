@@ -20,11 +20,16 @@ export const start = async (maybeData : unknown, db : FirestoreWeb|FirestoreAdmi
 } 
 
 const parse = async (collections : Collection[], path : string, db : FirestoreWeb|FirestoreAdmin, counter : Counter,logger : Logger,firestoreType : FirestoreType ) : Promise<Summary> => {
+    let a = 1;
+    for (const collection of collections) {
+        try {
+            
+        }
+    }
     collections.forEach(async collection => {
         try {
             checkCollection(collection)
             path = createNewCollectionPath(path,collection.name)
-            
             const docOperation = collection.docs.map(doc => {
                 try {
                     checkDocument(doc)
@@ -35,12 +40,16 @@ const parse = async (collections : Collection[], path : string, db : FirestoreWe
                 }
             })
             
+            
             const docResults = await Promise.allSettled(docOperation)
+            console.log("I am here")
             docResults.forEach(doc => {
                 if(doc.status === "fulfilled") {
-                    logger(`success, doc: ${doc.value}`)
+                    //logger(`success, doc: ${doc.value}`)
+                    counter.addDoc()
                 } else {
-                    logger(doc.reason)
+                    //logger(doc.reason)
+                    counter.addDocError()
                 }
             })
             
@@ -49,9 +58,11 @@ const parse = async (collections : Collection[], path : string, db : FirestoreWe
         } catch (error) {
             let error_ = error as Error
             logger(`Collection error at path { ${path} } (or at the same level): ${error_.message}. Failed object: ${JSON.stringify(collection)}`)
-            counter.collectionErrors = counter.collectionErrors+1
+            counter.addCollectionError()
+            
         }
     })
+    console.log(`this is a: ${a}`)
     return counter.values
 } 
 
@@ -62,6 +73,7 @@ export const writeDoc = async (document : Document, path : string, db : Firestor
         return await writeDocAdmin(document,path,db as FirestoreAdmin)
     }
 }
+
 
 
 

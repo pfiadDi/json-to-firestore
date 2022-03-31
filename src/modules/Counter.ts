@@ -9,12 +9,15 @@ export class Counter {
 
     public addDoc() {
         this.docs++;
+        return this;
     }
     public addDocError() {
         this.docErrors++;
+        return this;
     }
     public addCollectionError() {
         this.collectionErrors++;
+        return this;
     }
 
     public get values() : Summary {

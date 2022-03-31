@@ -150,7 +150,6 @@ export class FirestoreMock {
 
     set(data:object,options:object) {
         return new Promise((resolve,reject)=>{
-            console.log("resolved")
             resolve(this)
         })
     }
