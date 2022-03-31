@@ -21,7 +21,7 @@ describe('A possible TopLevel is parsed and imported', async () => {
         //return expect(start(correctTopLevel,"", {} as Firestore, {} as Logger)).eventually.to.be.deep.equal(create("success","temp to compile"))
         
         // @ts-ignore:next-line
-        return expect(start(correctTopLevel,db as Firestore, console_,"admin")).eventually.to.be.deep.equal(summary(2,1,0))
+        return expect(start(correctTopLevel,db as Firestore, console_,"admin")).eventually.to.be.deep.equal(summary(3,1,0))
     })
 
     it('A incorrect TopLevel throws',()=>{

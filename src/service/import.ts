@@ -40,10 +40,10 @@ const parse = async (collections : Collection[], path : string, db : FirestoreWe
             for (const result of docResults) {
                 if(result.status === "fulfilled") {
                     counter.addDoc()
-                    logger(`success, doc: ${result.value}`)
-                    if(result.value[1].data.collection !== null) {
+                    logger(`success, doc: ${result.value[0]}`)
+                    if(result.value[1].collection !== null) {
                         //there is a collection in the document
-                       // parse(result.value[1].data.collection as Collection[],result.value[0],db,counter,logger,firestoreType)
+                       parse(result.value[1].collection,result.value[0],db,counter,logger,firestoreType)
                     }
                 } else {
                     logger(result.reason)

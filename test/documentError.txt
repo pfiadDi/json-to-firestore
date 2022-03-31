@@ -1,1 +1,1 @@
-Document error at path - invoices -, passed data: - {"name":"","data":{"companyName":"Large Corp","startDate":"2020-08-21","endDate":"2020-08-31"},"collection":null}. That happend: db.collection is not a function
+Document error at path - invoices -, passed data: - {"name":""}. That happend: Expected Expected an object at field "data" but got got anything elsecollection":null}. That happend: db.collection is not a function
