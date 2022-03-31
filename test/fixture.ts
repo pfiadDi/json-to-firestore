@@ -8,21 +8,7 @@ export const docNoName : unknown = {
         startDate: "2020-08-21",
         endDate: "2020-08-31"
     },
-    collection: [
-        {
-            name: "invoices",
-            docs: [
-                {
-                    name: "",
-                    data: {
-                        "amount": 1000,
-                        "product": "Productname"
-                    },
-                    collection: null
-                },
-            ]
-        }
-         ]
+    collection: null
     }
 
 export const correctDocThrow : unknown = {
@@ -57,7 +43,7 @@ export const correctDocName : unknown = {
     },
     collection: [
         {
-            name: "invoices",
+            name: "THESUBCOLLECTION",
             docs: [
                 {
                     name: "",

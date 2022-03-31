@@ -3,7 +3,7 @@ import { Document } from '../modules/Document';
 import { docError } from '../modules/Logger';
 
 
-export const writeDocAdmin = async (document : Document,path:string,db:Firestore) : Promise<string> => {
+export const writeDocAdmin = async (document : Document,path:string,db:Firestore) : Promise<[string,Document]> => {
     try {
         let newDoc : DocumentReference;
         if (document.name === "") {
@@ -12,7 +12,7 @@ export const writeDocAdmin = async (document : Document,path:string,db:Firestore
             newDoc = db.collection(path).doc(document.name);
         }
         await newDoc.set(document.data,{ merge: true })
-        return newDoc.path
+        return [newDoc.path,document]
     }catch(error) {
         let error_ = error as Error;
         return Promise.reject(docError(document,error_.message,path))

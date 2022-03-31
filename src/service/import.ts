@@ -1,6 +1,6 @@
 import { Firestore as FirestoreWeb } from "firebase/firestore"
 import {  Firestore as FirestoreAdmin } from 'firebase-admin/firestore'
-import { docError, Logger } from "../modules/Logger"
+import { collectionError, docError, Logger } from "../modules/Logger"
 import {  checkTopLevel } from "../modules/TopLevel"
 import { checkCollection, Collection } from "../modules/Collection"
 import {Counter, Summary } from "../modules/Counter"
@@ -20,10 +20,10 @@ export const start = async (maybeData : unknown, db : FirestoreWeb|FirestoreAdmi
 } 
 
 const parse = async (collections : Collection[], path : string, db : FirestoreWeb|FirestoreAdmin, counter : Counter,logger : Logger,firestoreType : FirestoreType ) : Promise<Summary> => {
-    let a = 1;
     for (const collection of collections) {
         try {
             checkCollection(collection)
+            console.log(collection.name)
             path = createNewCollectionPath(path,collection.name)
             const docOperation = collection.docs.map(doc => {
                 try {
@@ -37,30 +37,30 @@ const parse = async (collections : Collection[], path : string, db : FirestoreWe
             
             
             const docResults = await Promise.allSettled(docOperation)
-            docResults.forEach(doc => {
-                if(doc.status === "fulfilled") {
-                    logger(`success, doc: ${doc.value}`)
+            for (const result of docResults) {
+                if(result.status === "fulfilled") {
                     counter.addDoc()
+                    logger(`success, doc: ${result.value}`)
+                    if(result.value[1].data.collection !== null) {
+                        //there is a collection in the document
+                       // parse(result.value[1].data.collection as Collection[],result.value[0],db,counter,logger,firestoreType)
+                    }
                 } else {
-                    logger(doc.reason)
+                    logger(result.reason)
                     counter.addDocError()
                 }
-            })
-          
-
+            }
         } catch (error) {
             let error_ = error as Error
-            logger(`Collection error at path { ${path} } (or at the same level): ${error_.message}. Failed object: ${JSON.stringify(collection)}`)
+            logger(collectionError(collection,error_.message,path))
             counter.addCollectionError()
             
         }
     }
-
-    console.log(`this is a: ${a}`)
     return counter.values
 } 
 
-export const writeDoc = async (document : Document, path : string, db : FirestoreWeb|FirestoreAdmin, firestoreType : FirestoreType) : Promise<string> => {
+export const writeDoc = async (document : Document, path : string, db : FirestoreWeb|FirestoreAdmin, firestoreType : FirestoreType) : Promise<[string,Document]> => {
     if(firestoreType === "web") {
         return await writeDocWeb(document,path,db as FirestoreWeb)
     } else {
