@@ -1,7 +1,6 @@
-import { FirebaseApp } from "firebase/app";
 import {  Firestore, collection, doc, setDoc} from "firebase/firestore"
 import { Document } from "../modules/Document";
-import { docError, Logger } from "../modules/Logger";
+import { docError } from "../modules/Logger";
 
 export const writeDocWeb = async (document : Document,path:string,db:Firestore) : Promise<[string,Document]> => {
     try {

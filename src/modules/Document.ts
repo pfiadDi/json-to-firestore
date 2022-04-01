@@ -1,4 +1,4 @@
-import {Decoder,object, decodeValue,str, num, DecodeError, oneOf,format, nil, array, bool, union, nullable, decodeString, maybe} from "ts-json-decode"
+import {Decoder,object, decodeValue,str,  DecodeError, oneOf, nil, array } from "ts-json-decode"
 
 import { components } from "../model/schema"
 import { decodeCollection,Collection } from "./Collection"
