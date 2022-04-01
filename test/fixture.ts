@@ -51,7 +51,7 @@ export const correctDocName : unknown = {
                         "amount": 1000,
                         "product": "Productname"
                     },
-                    collection: null
+                     collection: null
                 },
             ]
         }

@@ -19,7 +19,7 @@ export const start = async (maybeData : unknown, db : FirestoreWeb|FirestoreAdmi
     }
 } 
 
-const parse = async (collections : Collection[], path : string, db : FirestoreWeb|FirestoreAdmin, counter : Counter,logger : Logger,firestoreType : FirestoreType ) : Promise<Summary> => {
+const parse = async (collections : Collection[], path : string, db : FirestoreWeb|FirestoreAdmin, counter : Counter,logger : Logger, firestoreType : FirestoreType ) : Promise<Summary> => {
     for (const collection of collections) {
         try {
             checkCollection(collection)

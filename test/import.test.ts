@@ -13,11 +13,8 @@ const db = new FirestoreMock()
 
 
 describe('A possible TopLevel is parsed and imported', async () => {
-    it("collection is a function",()=>{
-        expect(new FirestoreMock().collection("hallo").path).to.be.equal("hallo")
-    })
 
-    it('start - returns success when a correct data is passed',()=> {
+    it('All collections are imported recursivley',()=> {
         //return expect(start(correctTopLevel,"", {} as Firestore, {} as Logger)).eventually.to.be.deep.equal(create("success","temp to compile"))
         
         // @ts-ignore:next-line
