@@ -1,4 +1,4 @@
-import fs from "fs"
+import * as fs from "fs"
 
 export type Logger = {
     /** @description A callback function that takes the status msg, and propably does something with it like logging it to the console */

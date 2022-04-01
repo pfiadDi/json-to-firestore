@@ -1,7 +1,7 @@
 import {Decoder,object, decodeValue,str,  DecodeError, oneOf, nil, array } from "ts-json-decode"
 
 import { components } from "../model/schema"
-import { decodeCollection,Collection } from "./Collection"
+import { decodeCollection } from "./Collection"
 
 export type Document = components["schemas"]["Document"]
 
